@@ -5,19 +5,14 @@ services:
     image: caddy:2.7-alpine
     container_name: caddy-reverse-proxy
     restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
+    # Ports are handled by host networking
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
     environment:
       - CADDY_INGRESS_NETWORKS=caddy
-    networks:
-      - caddy
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    network_mode: host
 
 volumes:
   caddy_data:
@@ -25,7 +20,4 @@ volumes:
   caddy_config:
     external: false
 
-networks:
-  caddy:
-    name: caddy
-    driver: bridge
+# Networks not needed with host networking

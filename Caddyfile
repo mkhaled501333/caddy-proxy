@@ -15,7 +15,7 @@ janssencrm.cloud {
     # tls block is optional - Caddy will automatically use Let's Encrypt for public domains
     
     # Reverse proxy to the first application
-    reverse_proxy http://host.docker.internal:3000 {
+    reverse_proxy http://127.0.0.1:3000 {
         # Health check
         health_uri /
         health_interval 30s
@@ -57,7 +57,7 @@ janssencmma.cloud {
     # tls block is optional - Caddy will automatically use Let's Encrypt for public domains
     
     # Reverse proxy to the second application
-    reverse_proxy http://host.docker.internal:3001 {
+    reverse_proxy http://127.0.0.1:3001 {
         # Health check
         health_uri /
         health_interval 30s
