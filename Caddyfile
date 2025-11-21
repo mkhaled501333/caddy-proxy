@@ -3,9 +3,7 @@
 # First application - janssencrm.cloud
 janssencrm.cloud {
     # Enable automatic HTTPS with Let's Encrypt
-    tls {
-        # Let's Encrypt will automatically be used for public domains
-    }
+    # tls block is optional - Caddy will automatically use Let's Encrypt for public domains
     
     # Reverse proxy to the first application
     reverse_proxy http://host.docker.internal:3000 {
@@ -49,9 +47,7 @@ janssencrm.cloud {
 # Second application - janssencmma.cloud
 janssencmma.cloud {
     # Enable automatic HTTPS with Let's Encrypt
-    tls {
-        # Let's Encrypt will automatically be used for public domains
-    }
+    # tls block is optional - Caddy will automatically use Let's Encrypt for public domains
     
     # Reverse proxy to the second application
     reverse_proxy http://host.docker.internal:3001 {
