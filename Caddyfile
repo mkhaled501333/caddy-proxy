@@ -9,26 +9,23 @@
     admin localhost:2019
 }
 
-# Frontend + API
 janssencrm.cloud {
-    # API to backend
-    reverse_proxy /api/* http://127.0.0.1:8081 {
-        health_uri /health
-        health_interval 30s
-        health_timeout 5s
-    }
-
     # Frontend
     reverse_proxy / http://127.0.0.1:3000
 
+    # Backend API (بدون health check)
+    reverse_proxy /api/* http://127.0.0.1:8081
+
+    # Security headers
     header {
-        Strict-Transport-Security max-age=31536000;
+        Strict-Transport-Security max-age=31536000
         X-Frame-Options DENY
         X-Content-Type-Options nosniff
         X-XSS-Protection "1; mode=block"
         Referrer-Policy strict-origin-when-cross-origin
     }
 
+    # Logging
     log {
         output file /var/log/caddy/janssencrm.log {
             roll_size 10MB
