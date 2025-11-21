@@ -1,5 +1,14 @@
 # Caddy configuration for reverse proxy with automatic HTTPS
 
+# Global options (must be first)
+{
+    # Email for Let's Encrypt
+    email mohamed501333@gmail.com
+    
+    # Enable the admin API (optional, for monitoring)
+    admin localhost:2019
+}
+
 # First application - janssencrm.cloud
 janssencrm.cloud {
     # Enable automatic HTTPS with Let's Encrypt
@@ -15,9 +24,7 @@ janssencrm.cloud {
         # Headers for proper forwarding
         header_up Host {upstream_hostport}
         header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-        header_up X-Forwarded-Host {host}
+        # X-Forwarded-For, X-Forwarded-Proto, and X-Forwarded-Host are set automatically by Caddy
     }
     
     # Security headers
@@ -59,9 +66,7 @@ janssencmma.cloud {
         # Headers for proper forwarding
         header_up Host {upstream_hostport}
         header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-        header_up X-Forwarded-Host {host}
+        # X-Forwarded-For, X-Forwarded-Proto, and X-Forwarded-Host are set automatically by Caddy
     }
     
     # Security headers
@@ -88,16 +93,3 @@ janssencmma.cloud {
     }
 }
 
-# Global options
-{
-    # Email for Let's Encrypt (replace with your email)
-    email mohamed501333@gamil.com
-    
-    # Enable the admin API (optional, for monitoring)
-    admin localhost:2019
-    
-    # Global log level
-    log {
-        level INFO
-    }
-}

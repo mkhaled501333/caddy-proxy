@@ -1,0 +1,5 @@
+cd caddy-proxy
+
+git pull origin main
+
+docker compose up -d --build
