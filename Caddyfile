@@ -1,0 +1,107 @@
+# Caddy configuration for reverse proxy with automatic HTTPS
+
+# First application - janssencrm.cloud
+janssencrm.cloud {
+    # Enable automatic HTTPS with Let's Encrypt
+    tls {
+        # Let's Encrypt will automatically be used for public domains
+    }
+    
+    # Reverse proxy to the first application
+    reverse_proxy http://host.docker.internal:3000 {
+        # Health check
+        health_uri /
+        health_interval 30s
+        health_timeout 5s
+        
+        # Headers for proper forwarding
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+    }
+    
+    # Security headers
+    header {
+        # Enable HSTS
+        Strict-Transport-Security max-age=31536000;
+        # Prevent clickjacking
+        X-Frame-Options DENY
+        # Prevent content-type sniffing
+        X-Content-Type-Options nosniff
+        # XSS protection
+        X-XSS-Protection "1; mode=block"
+        # Referrer policy
+        Referrer-Policy strict-origin-when-cross-origin
+    }
+    
+    # Logging
+    log {
+        output file /var/log/caddy/janssencrm.log {
+            roll_size 10MB
+            roll_keep 5
+        }
+        format json
+    }
+}
+
+# Second application - janssencmma.cloud
+janssencmma.cloud {
+    # Enable automatic HTTPS with Let's Encrypt
+    tls {
+        # Let's Encrypt will automatically be used for public domains
+    }
+    
+    # Reverse proxy to the second application
+    reverse_proxy http://host.docker.internal:3001 {
+        # Health check
+        health_uri /
+        health_interval 30s
+        health_timeout 5s
+        
+        # Headers for proper forwarding
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+    }
+    
+    # Security headers
+    header {
+        # Enable HSTS
+        Strict-Transport-Security max-age=31536000;
+        # Prevent clickjacking
+        X-Frame-Options DENY
+        # Prevent content-type sniffing
+        X-Content-Type-Options nosniff
+        # XSS protection
+        X-XSS-Protection "1; mode=block"
+        # Referrer policy
+        Referrer-Policy strict-origin-when-cross-origin
+    }
+    
+    # Logging
+    log {
+        output file /var/log/caddy/janssencmma.log {
+            roll_size 10MB
+            roll_keep 5
+        }
+        format json
+    }
+}
+
+# Global options
+{
+    # Email for Let's Encrypt (replace with your email)
+    email mohamed501333@gamil.com
+    
+    # Enable the admin API (optional, for monitoring)
+    admin localhost:2019
+    
+    # Global log level
+    log {
+        level INFO
+    }
+}
