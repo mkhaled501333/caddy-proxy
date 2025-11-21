@@ -35,24 +35,24 @@ janssencrm.cloud {
     }
 }
 
-# Second app (backend only)
-janssencmma.cloud {
-    reverse_proxy http://127.0.0.1:8081
+# # Second app (backend only)
+# janssencmma.cloud {
+#     reverse_proxy http://127.0.0.1:8081
 
-    header {
-        Strict-Transport-Security max-age=31536000;
-        X-Frame-Options DENY
-        X-Content-Type-Options nosniff
-        X-XSS-Protection "1; mode=block"
-        Referrer-Policy strict-origin-when-cross-origin
-    }
+#     header {
+#         Strict-Transport-Security max-age=31536000;
+#         X-Frame-Options DENY
+#         X-Content-Type-Options nosniff
+#         X-XSS-Protection "1; mode=block"
+#         Referrer-Policy strict-origin-when-cross-origin
+#     }
 
-    log {
-        output file /var/log/caddy/janssencmma.log {
-            roll_size 10MB
-            roll_keep 5
-        }
-        format json
-    }
-}
+#     log {
+#         output file /var/log/caddy/janssencmma.log {
+#             roll_size 10MB
+#             roll_keep 5
+#         }
+#         format json
+#     }
+# }
 
