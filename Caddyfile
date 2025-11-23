@@ -6,10 +6,11 @@
 janssencrm.cloud {
 	encode gzip
 
-	# Proxy all API requests to Dart Frog backend FIRST (more specific route)
-	# Note: If services are in Docker containers, you may need to use container IPs
-	# or switch to bridge networking instead of host networking
+	# Proxy all API requests to Dart Frog backend - preserve full /api/* path
+	# Match API paths and forward to backend without stripping /api prefix
 	handle_path /api/* {
+		# Restore the /api prefix using the original request path
+		rewrite * {http.request.uri.path}
 		reverse_proxy http://127.0.0.1:8081 {
 			header_up X-Real-IP {remote_host}
 		}
