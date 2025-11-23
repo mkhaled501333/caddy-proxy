@@ -1,5 +1,4 @@
 # Caddy configuration for reverse proxy with automatic HTTPS
-
 # Global options (must be first)
 {
     # Email for Let's Encrypt
@@ -10,11 +9,25 @@
 }
 
 janssencrm.cloud {
-    # Frontend
-    reverse_proxy / http://127.0.0.1:3000
+    encode gzip
 
-    # Backend API (بدون health check)
-    reverse_proxy /api/* http://127.0.0.1:8081
+    # Proxy all API requests to Dart Frog backend FIRST (more specific route)
+    reverse_proxy /api/* http://127.0.0.1:8081 {
+        # Preserve original request path
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Handle frontend Next.js requests
+    # For production: serve static files from Next.js build output
+    # For development: proxy to Next.js dev server on port 3000
+    reverse_proxy http://127.0.0.1:3000 {
+        # Preserve original request path
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
 
     # Security headers
     header {
@@ -55,4 +68,3 @@ janssencrm.cloud {
 #         format json
 #     }
 # }
-
