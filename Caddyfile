@@ -41,7 +41,7 @@ janssencrm.cloud {
 	}
 }
 
-janssencnna.cloud {
+janssencmma.cloud {
 	encode gzip
 
 	# Proxy all API requests to FastAPI backend
@@ -70,7 +70,7 @@ janssencnna.cloud {
 	}
 
 	log {
-		output file /var/log/caddy/janssencnna.log {
+		output file /var/log/caddy/janssencmma.log {
 			roll_size 10MB
 			roll_keep 5
 		}
