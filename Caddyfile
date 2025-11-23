@@ -1,35 +1,19 @@
-# Caddy configuration for reverse proxy with automatic HTTPS
-# Global options (must be first)
 {
-    # Email for Let's Encrypt
     email mohamed501333@gmail.com
-    
-    # Enable the admin API (optional, for monitoring)
     admin localhost:2019
 }
 
 janssencrm.cloud {
     encode gzip
 
-    # Proxy all API requests to Dart Frog backend FIRST (more specific route)
     reverse_proxy /api/* http://127.0.0.1:8081 {
-        # Preserve original request path
         header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
     }
 
-    # Handle frontend Next.js requests
-    # For production: serve static files from Next.js build output
-    # For development: proxy to Next.js dev server on port 3000
     reverse_proxy http://127.0.0.1:3000 {
-        # Preserve original request path
         header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
     }
 
-    # Security headers
     header {
         Strict-Transport-Security max-age=31536000
         X-Frame-Options DENY
@@ -38,7 +22,6 @@ janssencrm.cloud {
         Referrer-Policy strict-origin-when-cross-origin
     }
 
-    # Logging
     log {
         output file /var/log/caddy/janssencrm.log {
             roll_size 10MB
@@ -47,24 +30,3 @@ janssencrm.cloud {
         format json
     }
 }
-
-# # Second app (backend only)
-# janssencmma.cloud {
-#     reverse_proxy http://127.0.0.1:8081
-
-#     header {
-#         Strict-Transport-Security max-age=31536000;
-#         X-Frame-Options DENY
-#         X-Content-Type-Options nosniff
-#         X-XSS-Protection "1; mode=block"
-#         Referrer-Policy strict-origin-when-cross-origin
-#     }
-
-#     log {
-#         output file /var/log/caddy/janssencmma.log {
-#             roll_size 10MB
-#             roll_keep 5
-#         }
-#         format json
-#     }
-# }
