@@ -1,32 +1,32 @@
 {
-    email mohamed501333@gmail.com
-    admin localhost:2019
+	email mohamed501333@gmail.com
+	admin localhost:2019
 }
 
 janssencrm.cloud {
-    encode gzip
+	encode gzip
 
-    reverse_proxy /api/* http://127.0.0.1:8081 {
-        header_up X-Real-IP {remote_host}
-    }
+	reverse_proxy /api/* http://127.0.0.1:8081 {
+		header_up X-Real-IP {remote_host}
+	}
 
-    reverse_proxy http://127.0.0.1:3000 {
-        header_up X-Real-IP {remote_host}
-    }
+	reverse_proxy http://127.0.0.1:3000 {
+		header_up X-Real-IP {remote_host}
+	}
 
-    header {
-        Strict-Transport-Security max-age=31536000
-        X-Frame-Options DENY
-        X-Content-Type-Options nosniff
-        X-XSS-Protection "1; mode=block"
-        Referrer-Policy strict-origin-when-cross-origin
-    }
+	header {
+		Strict-Transport-Security max-age=31536000
+		X-Frame-Options DENY
+		X-Content-Type-Options nosniff
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy strict-origin-when-cross-origin
+	}
 
-    log {
-        output file /var/log/caddy/janssencrm.log {
-            roll_size 10MB
-            roll_keep 5
-        }
-        format json
-    }
+	log {
+		output file /var/log/caddy/janssencrm.log {
+			roll_size 10MB
+			roll_keep 5
+		}
+		format json
+	}
 }
