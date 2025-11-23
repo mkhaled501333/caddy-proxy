@@ -6,11 +6,12 @@
 janssencrm.cloud {
 	encode gzip
 
-	# Proxy all API requests to Dart Frog backend - preserve full /api/* path
-	# Match API paths and forward to backend without stripping /api prefix
-	handle_path /api/* {
-		# Restore the /api prefix using the original request path
-		rewrite * {http.request.uri.path}
+	# Proxy all API requests to Dart Frog backend
+	# Use handle with path matcher (doesn't strip the path)
+	@api {
+		path /api/*
+	}
+	handle @api {
 		reverse_proxy http://127.0.0.1:8081 {
 			header_up X-Real-IP {remote_host}
 		}
