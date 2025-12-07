@@ -41,7 +41,7 @@ janssencrm.cloud {
 	}
 }
 
-janssencmma.cloud, www.janssencmma.cloud {
+janssencmma.com, www.janssencmma.com {
 	encode gzip
 
 	# Proxy all API requests to FastAPI backend

@@ -16,7 +16,7 @@ caddy-proxy/
 
 1. **Domain DNS Configuration**: Ensure both domains point to your server's public IP:
    - `janssencrm.cloud` → Your server IP
-   - `janssencmma.cloud` → Your server IP
+   - `janssencmma.com` → Your server IP
 
 2. **Firewall Configuration**: Open ports 80 and 443 on your server
    - Port 80: HTTP (for Let's Encrypt challenges)
@@ -34,7 +34,7 @@ Edit the `Caddyfile` and replace `admin@janssencrm.cloud` with your actual email
 ### 2. Verify Domain Names
 Ensure the domain names in the `Caddyfile` match your actual domains:
 - `janssencrm.cloud`
-- `janssencmma.cloud`
+- `janssencmma.com`
 
 ## Deployment
 
@@ -70,7 +70,7 @@ After starting, Caddy will automatically:
 2. **Test HTTPS**:
    ```bash
    curl -I https://janssencrm.cloud
-   curl -I https://janssencmma.cloud
+   curl -I https://janssencmma.com
    # Should return 200 OK with your application response
    ```
 
